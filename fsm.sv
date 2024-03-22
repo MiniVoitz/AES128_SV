@@ -23,7 +23,7 @@ module fsm (
    } fsm_t;
 fsm_t     state,next_state;
 
-logic [0:4] i;
+logic [0:3] i;
 
 
 
