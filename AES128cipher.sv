@@ -67,7 +67,6 @@ fsm fsm1(
 );
 
 KeyExpansion keyexpansion1(
-  .clk(clk),
   .keyInit(keyInit),
   .key(afterBuff2),
   .roundKey(afterKeyExpansion)

@@ -19,9 +19,9 @@ module fsm (
 );
 
 // == Variables Declaration ====================================================
-  typedef enum  { store, tempo, firstaddround, round, transfer , lastkey,  lastround
+  typedef enum logic [0:2]   { store, tempo, firstaddround, round, transfer , lastkey,  lastround
    } fsm_t;
-fsm_t     state,next_state;
+fsm_t   state,next_state;
 
 logic [0:3] i;
 
