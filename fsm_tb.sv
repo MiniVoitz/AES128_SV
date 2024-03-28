@@ -6,27 +6,51 @@ module fsm_tb;
   logic clk;
   logic reset;
   logic [3:0] keyInitoui;
-  logic sel;
+  logic selCypher;
+  logic keyChange;
+  logic sel1;
   logic sel2;
+  logic sel3;
+  logic sel4;
   logic buffer1en;
   logic buffer2en;
   logic buffer3en;
   logic buffer4en;
   logic buffer5en;
-  logic buffer6en;
+  logic buffer7en;
+  logic buffer8en;
+  logic buffer9en;
+  logic B0en, B1en, B2en, B3en, B4en, B5en, B6en, B7en, B8en, B9en, B10en;
   // Instantiate the FSM module
   fsm dut (
     .clk(clk),
     .reset(reset),
     .keyInit(keyInitoui),
-    .sel(sel),
+    .sel1(sel1),
     .sel2(sel2),
+    .sel3(sel3),
+    .sel4(sel4),
+    .keyChange(keyChange),
+    .selCypher(selCypher),
     .buffer1en(buffer1en),
     .buffer2en(buffer2en),
     .buffer3en(buffer3en),
     .buffer4en(buffer4en),
     .buffer5en(buffer5en),
-    .buffer6en(buffer6en)
+    .buffer7en(buffer7en),
+    .buffer8en(buffer8en),
+    .buffer9en(buffer9en),
+    .B0en(B0en),
+    .B1en(B1en),
+    .B2en(B2en),
+    .B3en(B3en),
+    .B4en(B4en),
+    .B5en(B5en),
+    .B6en(B6en),
+    .B7en(B7en),
+    .B8en(B8en),
+    .B9en(B9en),
+    .B10en(B10en)
   );
 
   // Clock generation for the testbench
@@ -47,16 +71,6 @@ module fsm_tb;
     // Wait for a few clock cycles
     #10;
     // Display the initial values
-    $display("Initial values:");
-    $display("keyInit: %4b", keyInitoui);
-    $display("sel: %b", sel);
-    $display("sel2: %b", sel2);
-    $display("buffer1en: %b", buffer1en);
-    $display("buffer2en: %b", buffer2en);
-    $display("buffer3en: %b", buffer3en);
-    $display("buffer4en: %b", buffer4en);
-    $display("buffer5en: %b", buffer5en);
-    $display("buffer6en: %b", buffer6en);
     // Finish simulation after a few more clock cycles
     #1000;
     $finish;
@@ -66,16 +80,6 @@ module fsm_tb;
         repeat(10)
     begin
     @(posedge clk);
-    $display("Initial values:");
-    $display("keyInit: %4b", keyInitoui);
-    $display("sel: %b", sel);
-    $display("sel2: %b", sel2);
-    $display("buffer1en: %b", buffer1en);
-    $display("buffer2en: %b", buffer2en);
-    $display("buffer3en: %b", buffer3en);
-    $display("buffer4en: %b", buffer4en);
-    $display("buffer5en: %b", buffer5en);
-    $display("buffer6en: %b", buffer6en); 
     end
   
   end

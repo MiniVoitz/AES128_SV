@@ -31,7 +31,7 @@ module fsm (
   output logic         B7en,
   output logic         B8en,
   output logic         B9en,
-  output logic         B10en,
+  output logic         B10en
   
 );
 
