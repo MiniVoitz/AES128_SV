@@ -58,7 +58,7 @@ always_ff @(posedge clk, posedge reset)
 // == Main Code ================================================================
 
 always_ff @(posedge clk,posedge reset)
-    if   (reset) state <= store;
+    if   (reset) state <= Init;
     else         state <= next_state;
 
 
@@ -69,7 +69,6 @@ always_comb
     buffer3en = 0;
     buffer4en = 0;
     buffer5en = 0;
-    buffer6en = 0;
     buffer7en = 0;
     buffer8en = 0;
     buffer9en = 0;
