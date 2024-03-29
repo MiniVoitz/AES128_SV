@@ -46,7 +46,8 @@ logic [0:127] afterBuff1,
               afterRoundBlock_encrypt,
               afterlastblock_encrypt,
               afterRoundBlock_decrypt,
-              afterlastblock_decrypt; 
+              afterlastblock_decrypt,
+              keyChange128; 
 
 logic [0:3] keyInit, 
             sel4;
@@ -72,28 +73,32 @@ logic buffer1en,
       B10en,
       sel1, 
       sel2,
-      sel3;
+      sel3,
+      sel5;
 
+assign keyChange128 = afterB0^afterBuff2;
+assign keyChange = (&(keyChange128 == 0));
 //====Fsm Init================================================================
 
 fsm fsm1(
   .clk(clk),
   .reset(reset),
   .keyInit(keyInit),
-  .keyChange(afterB0^afterBuff2),
+  .keyChange(keyChange),
   .selCypher(selCypher),
   .sel1(sel1),
   .sel2(sel2),
   .sel3(sel3),
   .sel4(sel4),
+  .sel5(sel5),
   .buffer1en(buffer1en),
   .buffer2en(buffer2en),
   .buffer3en(buffer3en),
   .buffer4en(buffer4en),
   .buffer5en(buffer5en),
-  .buffer5en(buffer7en),
-  .buffer5en(buffer8en),
-  .buffer5en(buffer9en),
+  .buffer7en(buffer7en),
+  .buffer8en(buffer8en),
+  .buffer9en(buffer9en),
   .B0en(B0en),
   .B1en(B1en),
   .B2en(B2en),
@@ -125,7 +130,7 @@ mult2to1 mult_encrypt(
 RoundBlock roundblock_encrypt(
   .message(afterBuff3),
   .roundKey(afterMult_buff),  
-  .crypte(afterRoundBlock)
+  .crypte(afterRoundBlock_encrypt)
 );
 
 LastBlock lastblock_encrypt(
@@ -137,28 +142,34 @@ LastBlock lastblock_encrypt(
 //====Decryption Init================================================================
 
 AddRound_Key addroundkey_decrypt(
-  .message(afterBuff1),
+  .message(afterBuff2),
   .roundKey(afterMult_buff),  
-  .crypte(afteraddroundkey1)
+  .crypte(afteraddroundkey_decrypt)
 );
 
 mult2to1 mult_decrypt(
-  .a(key),
-  .b(afterBuff6),
+  .a(afteraddroundkey_decrypt),
+  .b(afterBuff8),
   .sel(sel2),
-  .out(afterMult2));
+  .out(afterMult_decrypt));
 
 RoundBlock roundblock_decrypt(
-  .message(afterBuff3),
+  .message(afterBuff7),
   .roundKey(afterMult_buff),  
   .crypte(afterRoundBlock_decrypt)
 );
 
 LastBlock lastblock_decrypt(
-  .message(afterBuff4),
+  .message(afterBuff8),
   .roundKey(afterMult_buff),  
-  .crypte(afterlastblock)
+  .crypte(afterlastblock_decrypt)
 );
+
+mult2to1 mult_output(
+  .a(afterBuff5),
+  .b(afterBuff9),
+  .sel(sel5),
+  .out(message_out));
 
 
 //====KeyExp Init================================================================
@@ -211,14 +222,14 @@ buffer buffer5(
   .reset(reset),
   .buff_in(afterlastblock_encrypt),
   .buff_en(buffer5en),
-  .buff_out(message_out)
+  .buff_out(afterBuff5)
 );
 
 
 buffer buffer7(
   .clk(clk),
   .reset(reset),
-  .buff_in(afterMult_buff),
+  .buff_in(afterMult_decrypt),
   .buff_en(buffer7en),
   .buff_out(afterBuff7)
 );

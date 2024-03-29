@@ -12,7 +12,8 @@ module fsm (
   output logic         sel1,
   output logic         sel2,
   output logic         sel3,
-  output logic[0:3]         sel4,  
+  output logic[0:3]     sel4, 
+  output logic          sel5, 
   output logic         buffer1en,
   output logic         buffer2en,
   output logic         buffer3en,
@@ -32,7 +33,6 @@ module fsm (
   output logic         B8en,
   output logic         B9en,
   output logic         B10en
-  
 );
 
 // == Variables Declaration ====================================================
@@ -88,6 +88,7 @@ always_comb
     sel2 = 0;
     sel3 = 0;
     sel4 = 0;
+    sel5 = 0;
     next_state      = state;
 
 
