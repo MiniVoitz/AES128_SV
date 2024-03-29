@@ -181,6 +181,29 @@ KeyExpansion keyexpansion1(
   .roundKey(afterKeyExp)
 );
 
+mult11to1 multKeyExp(
+  .a0(afterB0),
+  .a1(afterB1),
+  .a2(afterB2),
+  .a3(afterB3),
+  .a4(afterB4),
+  .a5(afterB5),
+  .a6(afterB6),
+  .a7(afterB7),
+  .a8(afterB8),
+  .a9(afterB9),
+  .a10(afterB10),
+  .sel(sel4),
+  .out(afterMult_buff)
+);
+
+mult2to1 mult_keyexp_in(
+  .a(afterKeyExp),
+  .b(afterBuff2),
+  .sel(sel3),
+  .out(afterMult_keyexp)
+);
+
 
 //====Buffer Init================================================================
 

@@ -120,7 +120,7 @@ always_comb
                   9 : B9en = 1; 
                   10 : B10en = 1; 
                   endcase
-                  sel4 = 1;
+                  sel4 = i - 1;
                   keyInit = i;
                   next_state = (i <= 10) ? Storekeyi : ((selCypher == 1) ? AddRoundKeyE : AddRoundKeyD);
       end

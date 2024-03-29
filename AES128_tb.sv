@@ -37,7 +37,7 @@ module AES128_tb;
     // Key input (in hexadecimal, 128 bits)
     key = 128'h2B28AB097EAEF7CF15D2154F16A6883C;
 
-    selCypher = 0;
+    selCypher = 1;
     // Wait for some time for encryption to complete
     #100;
     // Display the encrypted result
