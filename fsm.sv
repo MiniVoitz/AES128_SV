@@ -133,13 +133,13 @@ always_comb
                   end
 
       RoundE : begin
-                sel4=1;
+                sel4=i;
                 buffer4en=1;
-                  next_state = (i > 10) ? LastroundE : TransferE;
+                  next_state = (i > 8) ? LastroundE : TransferE;
                   end
 
       LastroundE : begin
-                sel4=1;
+                sel4=10;
                 buffer5en = 1;
                 next_state = Init;
       end
