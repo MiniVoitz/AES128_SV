@@ -20,10 +20,9 @@ logic [0:127] afterBuff1,
               afterBuff2,
               afterBuff3,
               afterBuff4,
-              afterBuff5,
+              after_mult_output,
               afterBuff7,
               afterBuff8,
-              afterBuff9,
               afterB0,
               afterB1,
               afterB2,
@@ -59,7 +58,6 @@ logic buffer1en,
       buffer5en, 
       buffer7en,
       buffer8en,
-      buffer9en,
       B0en, 
       B1en,
       B2en,
@@ -74,10 +72,11 @@ logic buffer1en,
       sel1, 
       sel2,
       sel3,
-      sel5;
+      sel5,
+      keyChange;
 
-assign keyChange128 = afterB0^afterBuff2;
-assign keyChange = (&(keyChange128 == 0));
+assign keyChange128 = afterB0^key;
+assign keyChange = (keyChange128 > 0);
 //====Fsm Init================================================================
 
 fsm fsm1(
@@ -98,7 +97,6 @@ fsm fsm1(
   .buffer5en(buffer5en),
   .buffer7en(buffer7en),
   .buffer8en(buffer8en),
-  .buffer9en(buffer9en),
   .B0en(B0en),
   .B1en(B1en),
   .B2en(B2en),
@@ -142,34 +140,34 @@ LastBlock lastblock_encrypt(
 //====Decryption Init================================================================
 
 AddRound_Key addroundkey_decrypt(
-  .message(afterBuff2),
+  .message(afterBuff1),
   .roundKey(afterMult_buff),  
   .crypte(afteraddroundkey_decrypt)
 );
 
 mult2to1 mult_decrypt(
-  .a(afteraddroundkey_decrypt),
-  .b(afterBuff8),
+  .a(afterBuff8),
+  .b(afteraddroundkey_decrypt),
   .sel(sel2),
   .out(afterMult_decrypt));
 
-RoundBlock roundblock_decrypt(
+InvRoundBlock roundblock_decrypt(
   .message(afterBuff7),
   .roundKey(afterMult_buff),  
   .crypte(afterRoundBlock_decrypt)
 );
 
-LastBlock lastblock_decrypt(
+InvLastBlock lastblock_decrypt(
   .message(afterBuff8),
   .roundKey(afterMult_buff),  
   .crypte(afterlastblock_decrypt)
 );
 
 mult2to1 mult_output(
-  .a(afterBuff5),
-  .b(afterBuff9),
+  .a(afterlastblock_encrypt),
+  .b(afterlastblock_decrypt),
   .sel(sel5),
-  .out(message_out));
+  .out(after_mult_output));
 
 
 //====KeyExp Init================================================================
@@ -243,9 +241,9 @@ buffer buffer4(
 buffer buffer5(
   .clk(clk),
   .reset(reset),
-  .buff_in(afterlastblock_encrypt),
+  .buff_in(after_mult_output),
   .buff_en(buffer5en),
-  .buff_out(afterBuff5)
+  .buff_out(message_out)
 );
 
 
@@ -265,13 +263,6 @@ buffer buffer8(
   .buff_out(afterBuff8)
 );
 
-buffer buffer9(
-  .clk(clk),
-  .reset(reset),
-  .buff_in(afterlastblock_decrypt),
-  .buff_en(buffer9en),
-  .buff_out(afterBuff9)
-);
 
 buffer B0(
   .clk(clk),

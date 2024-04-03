@@ -21,7 +21,6 @@ module fsm (
   output logic         buffer5en,
   output logic         buffer7en,
   output logic         buffer8en,
-  output logic         buffer9en,
   output logic         B0en,
   output logic         B1en,
   output logic         B2en,
@@ -71,7 +70,6 @@ always_comb
     buffer5en = 0;
     buffer7en = 0;
     buffer8en = 0;
-    buffer9en = 0;
     B0en = 0;
     B1en = 0;
     B2en = 0;
@@ -141,6 +139,7 @@ always_comb
       LastroundE : begin
                 sel4=10;
                 buffer5en = 1;
+                sel5=0;
                 next_state = Init;
       end
       TransferE : begin
@@ -149,7 +148,7 @@ always_comb
                 next_state= RoundE;
 		                end
       AddRoundKeyD : begin
-		            sel4 = 10; //ATTENTION PEUT ETRE A ECRIRE EN NOTATION BINAIRE
+		            sel4 = 10;
                 sel2 = 1;
 		            buffer7en = 1;
                 next_state= RoundD;
@@ -163,8 +162,9 @@ always_comb
 
       LastroundD : begin
                 sel4=0;
-                buffer9en = 1;
                 next_state = Init;
+                buffer5en = 1;
+                sel5 = 1;
       end
       TransferD : begin
                 buffer7en = 1;
