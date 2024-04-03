@@ -44,26 +44,18 @@ module AES128_tb;
     message_in = 128'h3902DC1925DC116A8409850B1DFB9732;
 
     selCypher = 0;
-    // Wait for some time for encryption to complete
-    //#100;
-    // Display the encrypted result
-    // Display the initial values
-    //$display("message:");
-    //for (int i = 0; i < 128; i += 32)
-    //  $write("%02h %02h %02h %02h\n", message_in[i +: 8], message_in[i + 8 +: 8], message_in[i + 16 +: 8], message_in[i + 24 +: 8]);
+        #380;
 
-    //$display("Key:");
-    //for (int i = 0; i < 128; i += 32)
-    //  $write("%02h %02h %02h %02h\n", key[i +: 8], key[i + 8 +: 8], key[i + 16 +: 8], key[i + 24 +: 8]);
+    message_in = 128'h328831E0435A3137F6309807A88DA234;
 
-    //#5
+    key = 128'h2B28AB097EAEF7CF15D2154F16A6883D;
 
-    // Display the encrypted result
-    //$display("cipherText:");
-    //for (int i = 0; i < 128; i += 32)
-    //  $write("%02h %02h %02h %02h\n", message_out[i +: 8], message_out[i + 8 +: 8], message_out[i + 16 +: 8], message_out[i + 24 +: 8]);
+    selCypher = 1;
 
-    // Finish simulation
+    #650;
+    message_in = 128'h3902DC1925DC116A8409850B1DFB9732;
+    key = 128'h2B28AB097EAEF7CF15D2154F16A6883C;
+    selCypher = 0;
     #10000
     $finish;
   end
