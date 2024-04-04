@@ -19,14 +19,17 @@ module ShiftRegister128to32 (
 logic [127:0] shift_reg;
 
 // Shift-out MSB first
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
+always_ff @(posedge clk or posedge reset) begin
+    if (reset) begin
         shift_reg <= 128'b0;
+    end
     else if (load) begin
         shift_reg <= data_in;
+    end 
+    else if (shift_out) begin
+        shift_reg <= {shift_reg[95:0], 32'h0000};
     end
-    end else begin
-        shift_reg <= {32'h0000, data_in[0:95]};
+    else begin
     end
 end
 
