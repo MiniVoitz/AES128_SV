@@ -55,7 +55,7 @@ module interfaceAES_tb;
 
     #90;
 
-    data_in = 32'habcdefab;
+    data_in = 32'habcdef12;
 
     RW = 1;
     adress = 1;
