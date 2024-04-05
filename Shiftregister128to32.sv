@@ -9,6 +9,7 @@ module ShiftRegister128to32 (
   input   logic  [127:0]  data_in,     // Clear Accumulation 
   input   logic         shift_out,     // Clear Accumulation 
   input logic           load,
+  input logic           CS,
   output  logic  [31:0]  data_out     // Input Data A
 );
 
@@ -29,7 +30,11 @@ always_ff @(posedge clk or posedge reset) begin
     else if (shift_out) begin
         shift_reg <= {shift_reg[95:0], 32'h0000};
     end
-    else begin
+    else if (CS == 0) begin
+        shift_reg <= 128'bZ;
+    end
+    end else begin
+        shift_reg <= {32'h0000, data_in[0:95]};
     end
 end
 
