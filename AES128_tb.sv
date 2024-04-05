@@ -7,6 +7,7 @@ module AES128_tb;
   logic [127:0] key;     // Key input (128 bits)
   logic [127:0] message_out;  // Encrypted output (128 bits)
   logic selCypher;
+  logic start;
 
   // Instantiation of the module under test
   AES128 dut(
@@ -15,7 +16,8 @@ module AES128_tb;
     .message_in(message_in),
     .key(key),
     .selCypher(selCypher),
-    .message_out(message_out)
+    .message_out(message_out),
+    .start(start)
   );
 
   // Clock signal generation

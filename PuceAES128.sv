@@ -35,11 +35,12 @@ interfaceAES interfaceAES_1(
 //=======AES128 init=======================
 AES128 AES128_1(
   .clk(clk),
-  .reset(start),
+  .reset(reset),
   .selCypher(selCypher),
   .message_in(afterMessage),
   .key(afterKey),
-  .message_out(afterCompute)
+  .message_out(afterCompute),
+  .start(start)
 );
 
 

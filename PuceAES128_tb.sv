@@ -95,7 +95,7 @@ PuceAES128 dut(
     start = 0;
 
     //récupération du résultat sur le bus
-    #320;
+    #220;
     initiate = 1;
     data_in = 'z;
     RW=0;

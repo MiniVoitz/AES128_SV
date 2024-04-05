@@ -8,6 +8,7 @@ module fsm (
   input  logic       reset,             // Synchronous Active High Reset (More Robust mapping on FPGA)
   input logic        selCypher,
   input logic         keyChange,
+  input logic         start,
   output logic[0:3]    keyInit,
   output logic         sel1,
   output logic         sel2,
@@ -56,8 +57,9 @@ always_ff @(posedge clk, posedge reset)
 
 // == Main Code ================================================================
 
-always_ff @(posedge clk,posedge reset)
+always_ff @(posedge clk,posedge reset, posedge start)
     if   (reset) state <= Init;
+    else if (start) state <= Init;
     else         state <= next_state;
 
 

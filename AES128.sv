@@ -10,6 +10,7 @@ module AES128(
   input logic                  selCypher,     // Encryption Or Decryption ?
   input  logic[0:127]          message_in,
   input logic[0:127]           key,
+  input logic                  start,
   output logic[0:127]          message_out
 );
 
@@ -90,6 +91,7 @@ fsm fsm1(
   .sel3(sel3),
   .sel4(sel4),
   .sel5(sel5),
+  .start(start),
   .buffer1en(buffer1en),
   .buffer2en(buffer2en),
   .buffer3en(buffer3en),

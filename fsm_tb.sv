@@ -20,12 +20,14 @@ module fsm_tb;
   logic buffer7en;
   logic buffer8en;
   logic buffer9en;
+  logic start;
   logic B0en, B1en, B2en, B3en, B4en, B5en, B6en, B7en, B8en, B9en, B10en;
   // Instantiate the FSM module
   fsm dut (
     .clk(clk),
     .reset(reset),
     .keyInit(keyInitoui),
+    .start(start),
     .sel1(sel1),
     .sel2(sel2),
     .sel3(sel3),
