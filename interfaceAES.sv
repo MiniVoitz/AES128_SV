@@ -5,7 +5,7 @@
 //==============================================================================
 
 module interfaceAES(
-  inout  logic[0:31]          data,
+  inout  wire[0:31]          data,
   input logic[0:127]           crypte,
   input logic                 clk,
   input logic                 reset,

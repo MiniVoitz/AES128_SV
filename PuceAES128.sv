@@ -12,7 +12,7 @@ module PuceAES128(
   input logic                  RW,
   input logic                  adress,
   input logic                  initiate,
-  inout logic[0:31]            data
+  inout wire[0:31]            data
 );
 
 //====Signal Init================================================================

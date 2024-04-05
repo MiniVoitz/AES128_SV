@@ -119,6 +119,7 @@ always_comb
                   8 : B8en = 1; 
                   9 : B9en = 1; 
                   10 : B10en = 1; 
+                  default;
                   endcase
                   sel4 = i - 1;
                   keyInit = i;
