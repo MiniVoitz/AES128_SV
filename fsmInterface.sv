@@ -6,12 +6,13 @@
 module fsmInterface (
   input  logic       clk,               // Main Clock
   input  logic       reset,             // Synchronous Active High Reset (More Robust mapping on FPGA)
-  input logic        CS,
+  input logic        initiate,
   input logic        RW,
   input logic        adress,
   output logic       load,
+  output logic       CS,
   output logic       shift_in_message,
-  output logic       shift_in_key
+  output logic       shift_in_key,
   output logic       shift_out
 );
 
@@ -34,37 +35,41 @@ always_ff @(posedge clk, posedge reset)
 // == Main Code ================================================================
 
 always_ff @(posedge clk,posedge reset)
-    if   (reset) state <= Init;
+    if   (reset) state <= Wait;
     else         state <= next_state;
 
 
 always_comb  
   begin
-    shift_in = 0;
+    shift_in_message = 0;
+    shift_in_key = 0;
     shift_out = 0;
     load = 0;
+    CS=0;
     next_state      = state;
 
 
     
     unique case (state) 
       Wait :  begin
-                  next_state   = (CS == 0) ? Wait : ((RW == 1) ? ((adress == 1) ? WriteKey : WriteData) : Read);
+        
+                  next_state   = (initiate == 0) ? Wait : ((RW == 1) ? ((adress == 1) ? WriteKey : WriteData) : Read);
                   end
 
       WriteData :  begin
                   shift_in_message = 1;
-                  next_state   = (i > 3) ? Wait : WriteData;
+                  next_state   = (i >= 3) ? Wait : WriteData;
                   end
 
       WriteKey :  begin
                   shift_in_key = 1;
-                  next_state   = (i > 3) ? Wait : WriteKey;
+                  next_state   = (i >= 3) ? Wait : WriteKey;
                   end
 
       Read :  begin
-                  load = (i == 1) ? 1 : 0;
-                  shift_out = 1;
+                  CS = (i > 0) ? 1 : 0;
+                  load = (i == 0) ? 1 : 0;
+                  shift_out = (i > 0) ? 1 : 0;
                   next_state   = (i > 3) ? Wait : Read;
                   end
 	    default:

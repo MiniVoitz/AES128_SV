@@ -5,26 +5,27 @@
 //==============================================================================
 
 module interfaceAES(
-  inout  logic[0:32]          data,
+  inout  logic[0:31]          data,
   input logic[0:127]           crypte,
-  input logic                 CS,
   input logic                 clk,
   input logic                 reset,
   input logic                 RW,
   input logic                 adress,
+  input logic                 initiate,
   output logic[0:127]          message,
   output logic[0:127]          key  
 );
 
-logic [0:127] shift_out, load, shift_in_message, shift_in_message;
+logic shift_out, load, shift_in_message, shift_in_key, CS;
+logic[0:31] after128to32;
+
 
 ShiftRegister128to32 crypte_register(
   .data_in(crypte),
-  .data_out(data),
+  .data_out(after128to32),
   .shift_out(shift_out),
   .clk(clk),
   .reset(reset),
-  .CS(CS),
   .load(load)
 ) ; 
 
@@ -44,6 +45,24 @@ ShiftRegister32to128 message_key(
   .shift_in(shift_in_key)
 ); 
 
+fsmInterface fsmInterface_1(
+  .clk(clk),
+  .reset(reset),
+  .CS(CS),
+  .RW(RW),
+  .adress(adress),
+  .load(load),
+  .shift_in_message(shift_in_message),
+  .shift_in_key(shift_in_key),
+  .shift_out(shift_out),
+  .initiate(initiate)
+);
+
+Tristate Tristate_1(
+  .buff_in(after128to32),
+  .CS(CS),
+  .buff_out(data)
+);
 
 
 

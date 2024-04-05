@@ -35,11 +35,13 @@ module ShiftRegister128to32_tb;
   // Test case
   initial begin
     // Enable buffer and provide input data
-    #15 load = 1;
+    #15;
+    load = 1;
     data_in = 128'h123456789ABCDEF0123456789ABCDEF;
     #5;
     load = 0;
     shift_out = 1;
+    #30;
   end
 
 endmodule

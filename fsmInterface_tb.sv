@@ -50,8 +50,16 @@ module fsmInterface_tb;
     CS = 1;
     RW = 1;
     adress = 0;
-    #50
-    
+    #50;
+    CS = 1;
+    RW = 1;
+    adress = 1;
+    #50;
+    CS = 1;
+    RW = 0;
+    #70;
+
+
   end
 
 
