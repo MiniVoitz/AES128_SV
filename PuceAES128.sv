@@ -12,7 +12,9 @@ module PuceAES128(
   input logic                  RW,
   input logic                  adress,
   input logic                  initiate,
-  inout wire[0:31]            data
+  input logic[0:31]            data_in,
+  output logic[0:31]           data_out,
+  output logic                 CS
 );
 
 //====Signal Init================================================================
@@ -21,7 +23,8 @@ logic[0:127] afterMessage, afterKey, afterCompute;
 
 //======Interface init==========================================
 interfaceAES interfaceAES_1(
-  .data(data),
+  .data_in(data_in),
+  .data_out(data_out),
   .crypte(afterCompute),
   .clk(clk),
   .reset(reset),
@@ -29,7 +32,8 @@ interfaceAES interfaceAES_1(
   .initiate(initiate),
   .adress(adress),
   .message(afterMessage),
-  .key(afterKey)
+  .key(afterKey),
+  .CS(CS)
 );
 
 //=======AES128 init=======================
