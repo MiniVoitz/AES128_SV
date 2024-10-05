@@ -12,10 +12,13 @@ This repository contains all the necessary files to run simulations and tests fo
 
 ├── DO/
 │   └── *.do      # ModelSim scripts for adding signals
+
 ├── RTL/
 │   └── *.sv      # Main SystemVerilog source code
+
 ├── testbench/
 │   └── *.sv      # Testbenches for verifying individual modules
+
 └──  project_report.pdf   # Final project report
 
 
